@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çiçek Yetiştirme Oyunu</title>
+    <link rel="stylesheet" href="still.css"> <!-- CSS dosyasını bağladık -->
+    <script src="combined.js"></script> 
+</head>
+<body>
+    <h1>Çiçeğini Yetiştir 🌱</h1>
+    <div class="game-container">
+        <div class="saksi" id="saksi1">
+            <div class="plant" id="plant1"></div>
+            <button class="sulama-button" onclick="waterPlant('saksi1')">💧 Sulama</button>
+        </div>
+        <div class="saksi" id="saksi2">
+            <div class="plant" id="plant2"></div>
+            <button class="sulama-button" onclick="waterPlant('saksi2')">💧 Sulama</button>
+        </div>
+    </div>
+    <div class="buttons">
+        <button onclick="buySeed()">Tohum Satın Al</button>
+    </div>
+
+    <script>
+        let plants = {
+            saksi1: { isWatered: false, size: 100 },
+            saksi2: { isWatered: false, size: 100 }
+        };
+
+        let canBuySeed = true;
+
+        function buySeed() {
+            if (canBuySeed) {
+                alert("Tohum satın alındı!");
+                canBuySeed = false; // Tohum bir kez alındıktan sonra tekrar alınamaz
+            } else {
+                alert("Zaten bir tohum aldınız!");
+            }
+        }
+
+        function waterPlant(saksiId) {
+            let plant = document.querySelector(`#${saksiId} .plant`);
+            let saksi = plants[saksiId];
+
+            if (!saksi.isWatered) {
+                alert(`${saksiId} bitkisine su verdin!`);
+                saksi.isWatered = true;
+                startGrowing(saksiId);
+            } else {
+                alert("Bu bitki zaten sulandı!");
+            }
+        }
+
+        function startGrowing(saksiId) {
+            let plant = document.querySelector(`#${saksiId} .plant`);
+            let saksi = plants[saksiId];
+
+            if (saksi.isWatered) {
+                saksi.size += 50; // Her sulama sonrası bitki boyutunu artır
+                plant.style.height = saksi.size + "px";
+                plant.style.width = saksi.size + "px";
+                plant.style.bottom = 20 + "px"; // Bitki yukarı doğru büyüdükçe biraz yükselir
+            }
+        }
+    </script>
+</body>
+</html>
